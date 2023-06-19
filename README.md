@@ -12,6 +12,8 @@ Code (Python and R) and supplementary information for my Applied Digital Health 
 
 The user should use the code files in their specified numerical order (e.g., 1. Extract data --> 2. Create outcome data --> 3. Clean data, etc.)
 
+The figures, tables, and SNOMED codes folder contain supplementary information to complement my dissertation document and for transparent research purposes. 
+
 # Credits
 - Built by Dunja Matic with assistance from Pradeep Virdee, particularly for files in 1. Extract Data
 - Files in 6. Imputation and 8. Statistical Models were adapted from code provided by van't Klooster et al. (https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8352343/)
