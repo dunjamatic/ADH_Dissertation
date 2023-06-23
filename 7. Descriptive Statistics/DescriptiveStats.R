@@ -67,8 +67,8 @@ dev.off()
 
 ############################### POST IMPUTATION ################################
 
-################################### AIM 1 ######################################
-######################### Create Table One - AIM 1 #############################
+################################### OBJECTIVE 1 ######################################
+######################### Create Table One - OBJECTIVE 1 #############################
 # Import data
 dat <- read.csv("imputed_totalModel.csv")
 
@@ -93,7 +93,7 @@ out <- print(tab, showAllLevels = TRUE, formatOptions = list(big.mark = ","), sm
 # Save tableone output to the working directory 
 write.csv(out, file = "final/0. Imputation/TableOnes/imputedTotalModel_tableone.csv")
 
-####### Distributions for Continuous Variables (post-imputation) - AIM 1 #######
+####### Distributions for Continuous Variables (post-imputation) - OBJECTIVE 1 #######
 setwd("final/0. Imputation") 
 dat <- read.csv("imputed_totalModel.csv")
 
@@ -164,8 +164,8 @@ cancerrates <- pyears(Surv(followup_time, cancer) ~ 1, scale=100, data=dat)
 round(cancerrates$event/ cancerrates$pyears,2) 
 
 
-################################ AIMS 2 AND 3 ##################################
-################### Create table one - AIMS TWO AND THREE ######################
+################################ OBJECTIVES 2 AND 3 ##################################
+################### Create table one - OBJECTIVES TWO AND THREE ######################
 
 # Import data
 setwd("final/2a. Compare FG to ML") 
@@ -195,10 +195,10 @@ out_p1 <- print(tab_p1, showAllLevels = TRUE, formatOptions = list(big.mark = ",
 out_p2 <- print(tab_p2, showAllLevels = TRUE, formatOptions = list(big.mark = ","), smd = TRUE)
 
 # Save tableone output to the working directory 
-write.csv(out_p1, file = "final/0. Imputation/TableOnes/aim2_3_tableone_train.csv")
-write.csv(out_p2, file = "final/0. Imputation/TableOnes/aim2_3_tableone_test.csv")
+write.csv(out_p1, file = "final/0. Imputation/TableOnes/objective2_3_tableone_train.csv")
+write.csv(out_p2, file = "final/0. Imputation/TableOnes/objective2_3_tableone_test.csv")
 
-#### Distributions for Continuous Variables (post-imputation) - AIM 2 and 3 ####
+#### Distributions for Continuous Variables (post-imputation) - OBJECTIVE 2 and 3 ####
 dat_p1 <- read.csv("FGTraining_totalModel.csv")
 dat_p2 <- read.csv("FGTesting_totalModel.csv")
 

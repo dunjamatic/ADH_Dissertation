@@ -53,7 +53,7 @@ cox_model <- coxph(
 
 # Now check PH assumption 
 # first with plots 
-somePDFPath1 = "proportionalHazards_Cox_trainModel_aim3.pdf"
+somePDFPath1 = "proportionalHazards_Cox_trainModel_objective3.pdf"
 pdf(file=somePDFPath1)
 plot(cox.zph(cox_model), resid = F, se = T, lwd = 3)
 dev.off()
@@ -395,7 +395,7 @@ train_cox_data$townsend_rcs <- rcs(train_cox_data$townsend, 4)
 
 # Make the final Cox model 
 # need to run coxph to be able to run predict()
-cox_model_final_aim3 <- coxph(
+cox_model_final_objective3 <- coxph(
   Surv(followup_time, total_outcomes) ~ age_quadr + age.time + 
     gender_encoded + gender.1.time + 
     height_rcs + 
@@ -411,13 +411,13 @@ cox_model_final_aim3 <- coxph(
 )
 
 # Save the model so we can re load it later on (commented is how you read it back in)
-saveRDS(cox_model_final_aim3, "cox_model_final_aim3.rds") 
-cox_model_final_aim3 <- readRDS("cox_model_final_aim3.rds")
+saveRDS(cox_model_final_objective3, "cox_model_final_objective3.rds") 
+cox_model_final_objective3 <- readRDS("cox_model_final_objective3.rds")
 
 # HRs and coefs
-coef1<- cox_model_final_aim3$coefficients
+coef1<- cox_model_final_objective3$coefficients
 coef1<-round((coef1),6)
-HR1<-round(cbind(exp(cox_model_final_aim3$coefficients),exp(confint(cox_model_final_aim3))) ,6)
+HR1<-round(cbind(exp(cox_model_final_objective3$coefficients),exp(confint(cox_model_final_objective3))) ,6)
 table1 <- cbind(coef1,HR1); colnames(table1) <- c("coef","HR","95% CI low","95%CI high") 
 table1
 
@@ -463,7 +463,7 @@ units(test_cox_data$followup_time) <- "Year"
 
 # Make the predictions
 # get predicted survivals and turn it into risk
-exp_event <- predict(cox_model_final_aim3,newdata=test_cox_data, type="expected")
+exp_event <- predict(cox_model_final_objective3,newdata=test_cox_data, type="expected")
 surv_prob <- exp(-exp_event)
 risk <- (1-surv_prob)*100 
 

@@ -12,7 +12,7 @@ library(pec)
 library(ggsurvfit)
 
 # Set working directory
-setwd("final\\1. Aim 1") 
+setwd("final\\1. Objective 1") 
 
 # Load data
 data<-read.csv("imputed_totalModel.csv")
@@ -361,7 +361,7 @@ finegray_final <- FGR(Hist(followup_time,total_outcomes)~baseline_age+gender_enc
                                  height+
                                  diabetes_status+
                                  alcohol_status+antiplatelets_use+
-                                 weight,data=data, cause = 1)
+                                 weight,data=data, cause = 1, maxiter = 500)
 
 ################################## SHRINKAGE ###################################
 # Shrinkage --> shrinkage factor obtained from the finegray() method

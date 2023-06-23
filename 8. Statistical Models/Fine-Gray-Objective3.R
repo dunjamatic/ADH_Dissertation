@@ -58,7 +58,7 @@ f_ph <- cph(Surv(fgstart,fgstop,fgstatus)~baseline_age+weight+gender_encoded+hei
 
 # Now check PH assumption 
 # first with plots
-somePDFPath = "proportionalHazards_FineGray_trainModel_aim3.pdf"
+somePDFPath = "proportionalHazards_FineGray_trainModel_objective3.pdf"
 pdf(file=somePDFPath)  
 plot(cox.zph(f_ph), resid = F, se = T, lwd = 3)
 dev.off() 
@@ -405,27 +405,27 @@ train_fg_data$antiplatelets_use <- as.factor(train_fg_data$antiplatelets_use)
 train_fg_data$ethnicity_encoded <- as.factor(train_fg_data$ethnicity_encoded)
 
 # Make the final FGR model 
-finegray_final <- FGR(Hist(followup_time,total_outcomes)~age_rcs + age.time +
-                        weight_rcs + weight.time+
-                        gender_encoded + gender.1.time + 
-                        height_rcs +
-                        crp_rcs + crp.time +
-                        smoking_status + smoking.1.time + smoking.2.time +
-                        diabetes_status + diabetes_status.time +
-                        alcohol_status + alcohol.1.time + alcohol.2.time +
-                        antiplatelets_use + antiplatelets.time + 
-                        townsend_rcs+
-                        ethnicity_encoded + ethnicity_encoded.1.time + ethnicity_encoded.2.time + ethnicity_encoded.3.time + ethnicity_encoded.4.time + ethnicity_encoded.5.time + ethnicity_encoded.6.time + ethnicity_encoded.7.time + ethnicity_encoded.8.time + ethnicity_encoded.9.time + ethnicity_encoded.10.time,
-                      data=train_fg_data, cause = 1)
+finegray_final_objective3 <- FGR(Hist(followup_time,total_outcomes)~age_rcs + age.time +
+                                  weight_rcs + weight.time+
+                                  gender_encoded + gender.1.time + 
+                                  height_rcs +
+                                  crp_rcs + crp.time +
+                                  smoking_status + smoking.1.time + smoking.2.time +
+                                  diabetes_status + diabetes_status.time +
+                                  alcohol_status + alcohol.1.time + alcohol.2.time +
+                                  antiplatelets_use + antiplatelets.time + 
+                                  townsend_rcs+
+                                  ethnicity_encoded + ethnicity_encoded.1.time + ethnicity_encoded.2.time + ethnicity_encoded.3.time + ethnicity_encoded.4.time + ethnicity_encoded.5.time + ethnicity_encoded.6.time + ethnicity_encoded.7.time + ethnicity_encoded.8.time + ethnicity_encoded.9.time + ethnicity_encoded.10.time,
+                                data=train_fg_data, cause = 1)
 
 # Save the model so we can re load it later on (commented is how you read it back in)
-saveRDS(finegray_final, "finegray_final.rds") 
-finegray_final_aim3 <- readRDS("finegray_final.rds")
+saveRDS(finegray_final_objective3, "finegray_final_objective3.rds") 
+finegray_final_objective3 <- readRDS("finegray_final_objective3.rds")
 
 # HRs and coefs
-coef1<- finegray_final$crrFit$coef
+coef1<- finegray_final_objective3$crrFit$coef
 coef1<-round((coef1),6)
-HR1<-round(cbind(exp(finegray_final$crrFit$coef)), 6)
+HR1<-round(cbind(exp(finegray_final_objective3$crrFit$coef)), 6)
 table1 <- cbind(coef1,HR1); 
 colnames(table1) <- c("coef","HR") 
 
@@ -474,7 +474,7 @@ test_fg_data$ethnicity_encoded <- as.factor(test_fg_data$ethnicity_encoded)
 # Make the predictions
 # https://cran.r-project.org/web/packages/riskRegression/riskRegression.pdf 
 # according to documentation, for predictRisk(), event risks are directly computed
-risk <- predictRisk(finegray_final_aim3,times=10, newdata=test_fg_data)
+risk <- predictRisk(finegray_final_objective3,times=10, newdata=test_fg_data)
 
 # define relevant variables 
 test_fg_data$plotrisk <- risk
